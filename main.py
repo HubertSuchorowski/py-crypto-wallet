@@ -31,39 +31,74 @@ def show_wallet():
 def show_cryptocurrencyPrice(data):
     print(data)
 
+def get_crypto_ammount():
+    while True:
+        try:
+            how_many = float(input("How many cryptocurrencies would you like to:  "))
+            if how_many > 0.0:
+                return how_many
+            else:
+                print("Please enter a number greater than 0.")
+        except ValueError:
+            print("Please enter a number.")
+
 def buy_crypto(how_many):
     price = cryptocurrencyPrice()
+    if price is None:
+        print("Failed to get price!")
+        return
 
     totalPrice = price * how_many
 
-    if user['cash'] > totalPrice:
+    if user['cash'] >= totalPrice:
         user['cash'] -= totalPrice
         user['holdings']['bitcoin'] += how_many
     else:
         print("You don't have enough money!")
 
-#def sell_crypto(symbols, ammount):
+
+def sell_crypto(how_many):
+    price = cryptocurrencyPrice()
+    if price is None:
+        print("Failed to get price!")
+        return
+
+    if user['holdings']['bitcoin'] >= how_many:
+        valueSell = how_many * price
+        user['holdings']['bitcoin'] -= how_many
+        user['cash'] += valueSell
+        print(f"Successfully sold {how_many} bitcoin for {valueSell}.")
+    else:
+        print("You don't have enough bitcoin to sell!")
+
+def procced_exchange():
+    print("\n --Choose an operation to proceed--")
+    print("1. Buy cryptocurrency")
+    print("2. Sell cryptocurrency")
+    choice = input(": ")
+
+    match choice:
+        case "1":
+            ammount_to_buy = get_crypto_ammount()
+            if ammount_to_buy:
+                buy_crypto(ammount_to_buy)
+
+        case "2":
+            ammount_to_buy = get_crypto_ammount()
+            if ammount_to_buy:
+                sell_crypto(ammount_to_buy)
 
 def show_menu():
     print("Welcome in your crypto currency walllet")
     print("What Actions would you like to take")
     print("1. Check cypto/usd ammount")
-    print("2. Check crypto current buy_crypto rate")
+    print("2. Check current cryptocurrency price")
     print("3. Buy/Sale some crypto")
     print("4. Exit")
 
 #def get_crypto_symbols():
 
-def get_crypto_ammount():
-    try:
-        how_many = float(input("How many cryptocurrencies would you like to buy:  "))
-        if how_many > 0.0:
-            return how_many
-        else:
-            print("Please enter a number greater than 0.")
-    except ValueError:
-        print("Please enter a number.")
-        return None
+
 
 def ask_to_continue():
     choice = input("\n Do you want go back to menu? (Y/N): ")
@@ -90,11 +125,9 @@ while True:
                    break
 
             case 3:
-                ammount_to_buy = get_crypto_ammount()
-                if ammount_to_buy:
-                    buy_crypto(ammount_to_buy)
-                    print("\n --Your wallet status after this operation--")
-                    show_wallet()
+                procced_exchange()
+                print("\n --Your wallet status after this operation--")
+                show_wallet()
                 if not ask_to_continue():
                     break
             case 4:
