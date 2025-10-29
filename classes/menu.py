@@ -1,8 +1,11 @@
 class Menu():
+    def __init__(self, exchange):
+        self.exchange = exchange
+
     def show_main_menu(self):
         print("Welcome in your crypto currency walllet")
         print("What Actions would you like to take")
-        print("1. Check cypto/usd ammount")
+        print("1. Check cypto/usd amount")
         print("2. Check current cryptocurrency price")
         print("3. Buy/Sale some crypto")
         print("4. Exit")
@@ -29,6 +32,19 @@ class Menu():
                 return choice
             else:
                 print("Invalid choice")
+
+    def proceed_exchange(self):
+        choice = self.show_exchange_menu()
+        match choice:
+            case "1":
+                amount_to_buy = self.exchange.get_crypto_amount()
+                if amount_to_buy:
+                    self.exchange.buy_crypto(amount_to_buy)
+
+            case "2":
+                amount_to_buy = self.exchange.get_crypto_amount()
+                if amount_to_buy:
+                    self.exchange.sell_crypto(amount_to_buy)
 
 
 

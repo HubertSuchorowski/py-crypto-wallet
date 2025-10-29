@@ -4,7 +4,7 @@ class Exchange:
         self.api = api
 
     @staticmethod
-    def get_crypto_ammount():
+    def get_crypto_amount():
         while True:
             try:
                 how_many = float(input("How many cryptocurrencies would you like to:  "))
@@ -17,7 +17,7 @@ class Exchange:
 
 
     def buy_crypto(self, how_many):
-        price = self.api.cryptocurrencyPrice()
+        price = self.api.cryptocurrency_price()
         if price is None:
             print("Failed to get price!")
             return

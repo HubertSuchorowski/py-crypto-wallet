@@ -4,7 +4,7 @@ class API:
         self.API_URL = API_URL
         self.API_KEY = API_KEY
 
-    def cryptocurrencyPrice(self):
+    def cryptocurrency_price(self):
         headers = {'x-cg-demo-api-key': self.API_KEY}
         params = {'ids': 'bitcoin', 'vs_currencies': 'usd'}
         try:

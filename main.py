@@ -1,28 +1,15 @@
-from api import API
+from classes.api import API
 #from user import User
-from wallet import Wallet
-from exchange import Exchange
-from menu import Menu
+from classes.wallet import Wallet
+from classes.exchange import Exchange
+from classes.menu import Menu
 
 
 def main():
     api = API('https://api.coingecko.com/api/v3/simple/price', "CG-YDaE1peLA15xdK6ZyEkwAbXz")
     wallet = Wallet(1000000, 0)
     exchange = Exchange(wallet = wallet, api = api)
-    menu = Menu()
-
-    def procced_exchange():
-        choice = menu.show_exchange_menu()
-        match choice:
-            case "1":
-                ammount_to_buy = exchange.get_crypto_ammount()
-                if ammount_to_buy:
-                    exchange.buy_crypto(ammount_to_buy)
-
-            case "2":
-                ammount_to_buy = exchange.get_crypto_ammount()
-                if ammount_to_buy:
-                    exchange.sell_crypto(ammount_to_buy)
+    menu = Menu(exchange = exchange)
 
     while True:
         choice = menu.show_main_menu()
@@ -35,14 +22,14 @@ def main():
 
                 case 2:
                    print("\n --Current Bitcoin Price -- ")
-                   cryptoCurrencyPrice = api.cryptocurrencyPrice()
-                   if cryptoCurrencyPrice:
-                     print(f"1 BTC = {cryptoCurrencyPrice}")
+                   cryptocurrency_price = api.cryptocurrency_price()
+                   if cryptocurrency_price:
+                     print(f"1 BTC = {cryptocurrency_price}")
                    if not menu.ask_to_continue():
                        break
 
                 case 3:
-                    procced_exchange()
+                    menu.proceed_exchange()
                     print("\n --Your wallet status after this operation--")
                     wallet.show_wallet()
                     if not menu.ask_to_continue():
