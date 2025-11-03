@@ -31,7 +31,7 @@ class Exchange:
             print("You don't have enough money!")
 
     def sell_crypto(self, how_many):
-        price = self.api.cryptocurrencyPrice()
+        price = self.api.cryptocurrency_price()
         if price is None:
             print("Failed to get price!")
             return
