@@ -7,7 +7,7 @@ from classes.menu import Menu
 
 def main():
     api = API('https://api.coingecko.com/api/v3/simple/price', "CG-YDaE1peLA15xdK6ZyEkwAbXz")
-    wallet = Wallet(1000000, 0)
+    wallet = Wallet()
     exchange = Exchange(wallet = wallet, api = api)
     menu = Menu(exchange = exchange)
 
