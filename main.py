@@ -1,5 +1,4 @@
 from classes.api import API
-from classes.db import load_wallet_data, save_wallet_data
 #from user import User
 from classes.wallet import Wallet
 from classes.exchange import Exchange
@@ -8,8 +7,7 @@ from classes.menu import Menu
 
 def main():
     api = API('https://api.coingecko.com/api/v3/simple/price', "CG-YDaE1peLA15xdK6ZyEkwAbXz")
-    default_cash, deafult_bitcoin = load_wallet_data()
-    wallet = Wallet(default_cash, deafult_bitcoin)
+    wallet = Wallet()
     exchange = Exchange(wallet = wallet, api = api)
     menu = Menu(exchange = exchange)
 
@@ -32,7 +30,6 @@ def main():
 
                 case 3:
                     menu.proceed_exchange()
-                    save_wallet_data(wallet.cash, wallet.bitcoin)
                     print("\n --Your wallet status after this operation--")
                     wallet.show_wallet()
                     if not menu.ask_to_continue():
